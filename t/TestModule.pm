@@ -12,9 +12,14 @@ class TestBase {
 class TestModule extends TestBase with TestRole {
     use MooseX::Types::Moose qw( Int HashRef );
     use MooseX::Types::Structured qw( Dict );
+    use Moose::Util::TypeConstraints;
+
+    our $VERSION = 0.01;
+    class_type;
 
     has foo  => (is => 'rw', isa => Int, documentation => 'this is a foo');
     has dict => (is => 'ro', isa => Dict[foo => HashRef], required => 1);
+    has myclass => (is => 'rw', isa => __PACKAGE__);
 
     method fnord (Int $x, Dict[foo => Int] $y) { $x }
     method no_type ($foo) { $foo }
@@ -31,7 +36,7 @@ class TestModule extends TestBase with TestRole {
 @license OtherModule
 @CLASS TestModule
 
-Abstract
+Abstract text
 
 @ATTR foo
 
@@ -64,9 +69,16 @@ This is the description.
 
 =head1 NAME
 
-TestModule - Abstract
+TestModule - 
+Abstract text
+
+
+=head1 VERSION
+
+0.01
 
 =head1 SYNOPSIS
+
 
     $foo->bar(23);
 
@@ -110,7 +122,9 @@ L<Moose::Object>
 
 =head1 DESCRIPTION
 
+
 This is the description.
+
 
 =head1 METHODS
 
@@ -122,7 +136,7 @@ Object constructor accepting the following parameters;
 
 =item * class (optional)
 
-Initial value for the L<class|TestBase/"class (optional)"> attribute.
+Initial value for the inherited L<class|TestBase/"class (optional)"> attribute.
 
 =item * dict (B<required>)
 
@@ -130,16 +144,22 @@ Initial value for the L<dict|/"dict (required)"> attribute.
 
 =item * file (optional)
 
-Initial value for the L<file|TestBase/"file (optional)"> attribute.
+Initial value for the inherited L<file|TestBase/"file (optional)"> attribute.
 
 =item * foo (optional)
 
 Initial value for the L<foo|/"foo (optional)"> attribute.
 
+=item * myclass (optional)
+
+Initial value for the L<myclass|/"myclass (optional)"> attribute.
+
 =back
 
 
+
 Additionally you can pass in C<fnord> to reboot the internet.
+
 
 =head2 classmethod
 
@@ -179,7 +199,7 @@ Reader for the L<dict|/"dict (required)"> attribute.
 
 the integer we return
 
-=item * Dict["foo",Int] $y
+=item * L<Dict|MooseX::Types::Structured/Dict>[foo,Int] $y
 
 the integer we discard
 
@@ -189,7 +209,9 @@ the integer we discard
 =back
 
 
+
 Additional method info.
+
 
 =head2 foo
 
@@ -225,6 +247,10 @@ Accessor for the L<foo|/"foo (optional)"> attribute.
 
 =back
 
+
+=head2 myclass
+
+Accessor for the L<myclass|/"myclass (optional)"> attribute.
 
 =head2 named
 
@@ -304,7 +330,7 @@ Returns the meta object for C<TestModule> as an instance of L<Class::MOP::Class:
 
 =item * Type Constraint
 
-L<MooseX::Types::Structured::Dict|MooseX::Types::Structured/Dict>[foo,HashRef]
+L<Dict|MooseX::Types::Structured/Dict>[foo,HashRef]
 
 =back
 
@@ -320,7 +346,19 @@ Int
 
 =back
 
+
 Attribute description.
+
+
+=head2 myclass (optional)
+
+=over
+
+=item * Type Constraint
+
+L<TestModule>
+
+=back
 
 
 =head1 ASSUMED VERSIONS
