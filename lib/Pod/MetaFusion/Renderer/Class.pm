@@ -110,7 +110,7 @@ Returns the meta object for C<Pod::MetaFusion::Renderer::Class> as an instance o
 
 =over
 
-=item * Pod::MetaFusion
+=item * L<Pod::MetaFusion>
 
 =back
 

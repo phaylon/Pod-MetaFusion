@@ -272,7 +272,7 @@ Returns all collected field values for a specific field.
 
 =over
 
-=item * Str $name
+=item * Str C<$name>
 
 The name of the field to fetch.
 
@@ -282,7 +282,7 @@ The name of the field to fetch.
 
 =over
 
-=item * Bool :$optional
+=item * Bool C<:$optional>
 
 Return undef instead of dying when there are no or too many values.
 
@@ -362,7 +362,7 @@ Reader for the L<spec_section|/"spec_section (required)"> attribute.
 
 =over
 
-=item * Str $pod
+=item * Str C<$pod>
 
 The newly generated POD that should be inserted instead of the old one.
 
@@ -382,7 +382,7 @@ Returns a new object if a spec was found or undef if not.
 
 =over
 
-=item * Str $pod
+=item * Str C<$pod>
 
 The newly generated POD that should be inserted instead of the old one.
 
@@ -412,7 +412,7 @@ Built lazily during runtime.
 
 =item * Constructor Argument
 
-This attribute can not be set in the constructor.
+This attribute can not be directly set at object construction.
 
 =item * Associated Methods
 
@@ -482,7 +482,7 @@ Version 0.92
 
 =over
 
-=item * Pod::Elemental
+=item * L<Pod::Elemental>
 
 =back
 

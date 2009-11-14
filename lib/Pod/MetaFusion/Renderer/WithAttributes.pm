@@ -95,7 +95,7 @@ role Pod::MetaFusion::Renderer::WithAttributes with Pod::MetaFusion::Renderer::W
                     'Constructor Argument' => (
                         defined($_->init_arg)
                         ? $_->init_arg
-                        : 'This attribute can not be set in the constructor.'
+                        : 'This attribute can not be directly set at object construction.'
                     ),
                     ( @methods ? (
                         'Associated Methods' => join(', ', map {
@@ -171,7 +171,7 @@ See L<Pod::MetaFusion::Renderer::WithName>.
 
 =over
 
-=item * Object $spec
+=item * Object C<$spec>
 
 =back
 
@@ -189,7 +189,7 @@ Transforms the attribute specification into a more usable format.
 
 =over
 
-=item * Object $attr
+=item * Object C<$attr>
 
 A L<Moose::Meta::Attribute>.
 
@@ -209,7 +209,7 @@ Renders the name of an attribute including a note whether its optional or requir
 
 =over
 
-=item * Object $spec
+=item * Object C<$spec>
 
 =back
 
@@ -223,7 +223,7 @@ Returns the meta object for C<Pod::MetaFusion::Renderer::WithAttributes> as an i
 
 =over
 
-=item * Pod::MetaFusion
+=item * L<Pod::MetaFusion>
 
 =back
 

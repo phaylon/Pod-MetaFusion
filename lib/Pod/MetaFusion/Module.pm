@@ -184,7 +184,7 @@ Clearer for the L<pod_finder|/"pod_finder (optional)"> attribute.
 
 =over
 
-=item * Object $doc
+=item * Object C<$doc>
 
 A L<PPI::Document>.
 
@@ -258,7 +258,7 @@ Built lazily during runtime.
 
 =item * Constructor Argument
 
-This attribute can not be set in the constructor.
+This attribute can not be directly set at object construction.
 
 =item * Associated Methods
 
@@ -312,11 +312,11 @@ Version 1.206
 
 =over
 
-=item * Pod::MetaFusion
+=item * L<Pod::MetaFusion>
 
-=item * PPI::Transform
+=item * L<PPI::Transform>
 
-=item * PPI
+=item * L<PPI>
 
 =back
 

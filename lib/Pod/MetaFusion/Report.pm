@@ -174,7 +174,7 @@ Delegation to a generated method in the L<skipped|/skipped (required)> attribute
 
 =over
 
-=item * L<ExistingItem|Pod::MetaFusion::Types/ExistingItem> $target
+=item * L<ExistingItem|Pod::MetaFusion::Types/ExistingItem> C<$target>
 
 This is the filesystem path that will be displayed in the report.
 
@@ -194,7 +194,7 @@ Format the collected data as a report string.
 
 =over
 
-=item * @args
+=item * C<@args>
 
 Will be passed on to the L</as_string> method.
 
@@ -271,7 +271,7 @@ Built during runtime.
 
 =item * Constructor Argument
 
-This attribute can not be set in the constructor.
+This attribute can not be directly set at object construction.
 
 =item * Associated Methods
 
@@ -295,7 +295,7 @@ Built during runtime.
 
 =item * Constructor Argument
 
-This attribute can not be set in the constructor.
+This attribute can not be directly set at object construction.
 
 =item * Associated Methods
 
@@ -346,7 +346,7 @@ Version 0.92
 
 =over
 
-=item * Pod::MetaFusion
+=item * L<Pod::MetaFusion>
 
 =back
 

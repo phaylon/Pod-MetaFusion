@@ -126,9 +126,9 @@ Path to an existing file or directory.
 
 =over
 
-=item * Pod::MetaFusion
+=item * L<Pod::MetaFusion>
 
-=item * MooseX::Types
+=item * L<MooseX::Types>
 
 =back
 

@@ -145,7 +145,7 @@ Returns the name of the field that holds the class that should be introspected. 
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 =back
 
@@ -161,7 +161,7 @@ Returns the meta object for C<Pod::MetaFusion::Renderer::Role> as an instance of
 
 =over
 
-=item * Pod::NetaFusion
+=item * L<Pod::NetaFusion>
 
 =back
 

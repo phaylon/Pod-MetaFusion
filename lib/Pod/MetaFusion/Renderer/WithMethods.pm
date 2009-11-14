@@ -177,7 +177,7 @@ role Pod::MetaFusion::Renderer::WithMethods with Pod::MetaFusion::Renderer::With
                 my $param = shift;
                 return join ' ',
                   ( $param->type_constraints ? $self->render_type_constraint($param->type_constraints->tc) : () ),
-                    $param->_stringify_variable_name;
+                    sprintf('C<%s>', $param->_stringify_variable_name);
             };
 
             my @positional = $sig->has_positional_params ? (
@@ -271,7 +271,7 @@ See L<Pod::MetaFusion::Renderer::WithName>
 
 =over
 
-=item * Object $spec
+=item * Object C<$spec>
 
 =back
 
@@ -287,7 +287,7 @@ Returns the meta object for C<Pod::MetaFusion::Renderer::WithMethods> as an inst
 
 =over
 
-=item * Pod::MetaFusion
+=item * L<Pod::MetaFusion>
 
 =back
 

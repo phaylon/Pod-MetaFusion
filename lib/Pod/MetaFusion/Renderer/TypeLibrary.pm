@@ -153,7 +153,7 @@ Returns the name of the field that holds the package of the type library. Defaul
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 =back
 
@@ -169,9 +169,9 @@ Returns the meta object for C<Pod::MetaFusion::Renderer::TypeLibrary> as an inst
 
 =over
 
-=item * Pod::MetaFusion
+=item * L<Pod::MetaFusion>
 
-=item * MooseX::Types
+=item * L<MooseX::Types>
 
 =back
 

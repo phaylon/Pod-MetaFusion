@@ -150,7 +150,7 @@ Reader for the L<configfile|/"configfile (optional)"> attribute.
 
 =over
 
-=item * L<ExistingItem|Pod::MetaFusion::Types/ExistingItem> $target
+=item * L<ExistingItem|Pod::MetaFusion::Types/ExistingItem> C<$target>
 
  The file or directory that should be fused.
 
@@ -160,7 +160,7 @@ Reader for the L<configfile|/"configfile (optional)"> attribute.
 
 =over
 
-=item * Object :$report
+=item * Object C<:$report>
 
 Internal parameter.
 

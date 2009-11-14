@@ -110,7 +110,7 @@ See L<Pod::MetaFusion::Renderer::WithName>.
 
 =over
 
-=item * Object $spec
+=item * Object C<$spec>
 
 =back
 
@@ -126,7 +126,7 @@ Returns the meta object for C<Pod::MetaFusion::Renderer::WithInheritance> as an 
 
 =over
 
-=item * Pod::MetaFusion
+=item * L<Pod::MetaFusion>
 
 =back
 

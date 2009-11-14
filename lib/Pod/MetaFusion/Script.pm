@@ -297,9 +297,9 @@ Version 0.24
 
 =over
 
-=item * Pod::MetaFusion
+=item * L<Pod::MetaFusion>
 
-=item * MooseX::Getopt
+=item * L<MooseX::Getopt>
 
 =back
 

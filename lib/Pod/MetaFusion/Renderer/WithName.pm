@@ -76,7 +76,7 @@ Has to return the name of the field that holds the class that should be introspe
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 =back
 
@@ -92,7 +92,7 @@ Returns the meta object for C<Pod::MetaFusion::Renderer::WithName> as an instanc
 
 =over
 
-=item * Pod::MetaFusion
+=item * L<Pod::MetaFusion>
 
 =back
 

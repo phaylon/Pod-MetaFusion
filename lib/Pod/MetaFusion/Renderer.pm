@@ -250,7 +250,7 @@ class Pod::MetaFusion::Renderer {
         for my $link (@$see) {
             my ($target, $text) = @$link;
 
-            push @found, $target, $text;
+            push @found, sprintf('L<%s>', $target), $text;
         }
 
         return unless @found;
@@ -458,7 +458,7 @@ Clearer for the L<section_order_map|/"section_order_map (optional)"> attribute.
 
 =over
 
-=item * Object $meta
+=item * Object C<$meta>
 
 Search for a named class in the hierarchy of this meta class object.
 
@@ -478,7 +478,7 @@ Returns the first meta class object in the inheritance hierarchy that is not ano
 
 =over
 
-=item * Object $type_constraint
+=item * Object C<$type_constraint>
 
 Any kind of type constraint.
 
@@ -503,11 +503,11 @@ Predicate for the L<section_order_map|/"section_order_map (optional)"> attribute
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 The spec that holds the content to fetch.
 
-=item * Str $name
+=item * Str C<$name>
 
 Name of the section.
 
@@ -528,7 +528,7 @@ its meta object.
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 The spec that holds the content to fetch.
 
@@ -548,7 +548,7 @@ Renders the documentation and returns it as a string.
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 The spec that holds the content to fetch.
 
@@ -568,11 +568,11 @@ Renders the AUTHORS section if one was specified.
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 The spec that holds the content to fetch.
 
-=item * Str $field_name
+=item * Str C<$field_name>
 
 The name of the field that holds the content in the spec.
 
@@ -593,7 +593,7 @@ in the C<$spec> as the content.
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 The spec that holds the content to fetch.
 
@@ -613,7 +613,7 @@ Renders the CONTRIBUTORS section if one was specified.
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 The spec that holds the content to fetch.
 
@@ -633,7 +633,7 @@ Renders the DESCRIPTION section if one was specified.
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 The spec that holds the content to fetch.
 
@@ -653,7 +653,7 @@ Currently only renders the ASSUMED VERSIONS section when a C<note_verson> field 
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 The spec that holds the content to fetch.
 
@@ -673,7 +673,7 @@ Renders the LICENSE section if one was specified.
 
 =over
 
-=item * @parts
+=item * C<@parts>
 
 Even numbered list of headers/contents.
 
@@ -693,11 +693,11 @@ Renders a POD list with its arguments.
 
 =over
 
-=item * Str $name
+=item * Str C<$name>
 
 Name of the section.
 
-=item * Str $content
+=item * Str C<$content>
 
 Section content.
 
@@ -717,7 +717,7 @@ Renders a simple section.
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 The spec that holds the content to fetch.
 
@@ -737,7 +737,7 @@ Renders the SEE ALSO Section if any C<see_also> fields were specified.
 
 =over
 
-=item * L<Pod::MetaFusion::Module::Spec> $spec
+=item * L<Pod::MetaFusion::Module::Spec> C<$spec>
 
 The spec that holds the content to fetch.
 
@@ -757,7 +757,7 @@ Renders the SYNOPSIS section if one was specified.
 
 =over
 
-=item * Object $type_constraint
+=item * Object C<$type_constraint>
 
 Any kind of type constraint.
 
@@ -767,7 +767,7 @@ Any kind of type constraint.
 
 =over
 
-=item * Str :$local_package
+=item * Str C<:$local_package>
 
 =back
 
@@ -803,7 +803,7 @@ Reader for the L<section_order_map|/"section_order_map (optional)"> attribute.
 
 =over
 
-=item * Str $word
+=item * Str C<$word>
 
 =back
 
@@ -865,7 +865,7 @@ Holds the sections and their order as numbers.
 
 =over
 
-=item * Pod::MetaFusion
+=item * L<Pod::MetaFusion>
 
 =back
 
