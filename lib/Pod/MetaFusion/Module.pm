@@ -58,6 +58,7 @@ class Pod::MetaFusion::Module extends PPI::Transform {
                 $pod->set_content($wrapped);
 #                warn "WRITING $wrapped";
 #                warn "RENDERED $rendered";
+                printf "rendered %s\n", $doc->filename;
                 $self->add_rebuilt(file $doc->filename);
                 return 1;
             }
@@ -114,6 +115,9 @@ See L<PPI::Transform/document>.
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion::Module - Handle module transformations
@@ -148,7 +152,7 @@ L<Moose::Object>
 
 =head2 new
 
-Object constructor accepting the following parameters;
+Object constructor accepting the following parameters:
 
 =over
 

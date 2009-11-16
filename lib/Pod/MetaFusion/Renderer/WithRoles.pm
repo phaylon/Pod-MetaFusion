@@ -54,6 +54,9 @@ See L<Pod::MetaFusion::Renderer::WithName>.
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion::Renderer::WithRoles - Render documentation about consumed roles

@@ -7,6 +7,7 @@ class Pod::MetaFusion::Renderer {
     use Moose::Util                     qw( find_meta );
     use Moose::Util::TypeConstraints    qw( find_type_constraint );
     use Text::Balanced                  qw( extract_delimited extract_bracketed );
+    use Scalar::Util                    qw( blessed );
 
     use aliased 'Pod::MetaFusion::Report';
     use aliased 'Pod::MetaFusion::Module::Spec';
@@ -50,7 +51,8 @@ class Pod::MetaFusion::Renderer {
         my $class = $field->[0];
 
         Class::MOP::load_class($class);
-        return find_meta $class;
+        return $class->can('meta') ? $class->meta : undef;
+    #    return find_meta $class;
     }
 
     method render (Spec $spec) {
@@ -146,9 +148,17 @@ class Pod::MetaFusion::Renderer {
         return $done;
     }
 
+    method trim_string ($string) {
+        my $text = "$string";
+        $text =~ s/(?: \A[\s]+ | \s+\Z )//gx;
+        return $text;
+    }
+
     method render_type_constraint (Object $type_constraint, Str :$local_package?) {
 
-        my $name = $type_constraint->name;
+#        warn "TC $type_constraint";
+#        warn "BL " . blessed($type_constraint)
+        my $name = "$type_constraint";#$type_constraint->name;
         return $self->_deparse_type($name, local_package => $local_package || '');
 
 #        if ($name =~ /\A ([a-z0-9_:]+) (.*) \Z /xi) {
@@ -206,6 +216,7 @@ class Pod::MetaFusion::Renderer {
     method render_section (Str $name, Str $content) {
 
         return join("\n",
+            '',
             sprintf('=head1 %s', uc $name),
             '',
             $content,
@@ -404,6 +415,9 @@ Holds the sections and their order as numbers.
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion::Renderer - Renderer base class
@@ -430,7 +444,7 @@ L<Moose::Object>
 
 =head2 new
 
-Object constructor accepting the following parameters;
+Object constructor accepting the following parameters:
 
 =over
 

@@ -44,10 +44,19 @@ class Pod::MetaFusion::Module::Spec {
 
     method spec_content () {
 
+        return sprintf "=begin fusion\n\n%s\n\n=end fusion\n\n", join("\n\n",
+            map { s/(?: \A[\n]* | [\n]*\Z )//gx; $_ }
+            map { "$_" }
+            map { $_->as_pod_string } 
+            @{ $self->spec_section->children });
+
+        return $self->spec_section->as_pod_string;
+
         return join("\n",
             '=begin fusion',
             '',
-            join('', map { $_->as_pod_string } @{ $self->section_children }),
+            $self->spec_section->as_pod_string,
+#            (map map { $_->as_pod_string } @{ $self->section_children }),
             '',
             '=end fusion',
         );
@@ -68,7 +77,7 @@ class Pod::MetaFusion::Module::Spec {
 
     method _build_data {
 
-        my $content = join '', map { $_->as_pod_string } @{ $self->section_children };
+        my $content = join "\n\n", map { $_->as_pod_string } @{ $self->section_children };
         my @lines   = split /\n/, $content;
 
         my (%data, $latest_content, $latest_section);
@@ -135,6 +144,8 @@ class Pod::MetaFusion::Module::Spec {
     method wrap (Str $pod) {
 
         return join("\n",
+            '=encoding utf-8',
+            '',
             $self->spec_content,
             '',
             '',
@@ -206,6 +217,9 @@ Our C<fusion> section in the POD document.
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion::Module::Spec - Load and transform fusion specs
@@ -232,7 +246,7 @@ L<Moose::Object>
 
 =head2 new
 
-Object constructor accepting the following parameters;
+Object constructor accepting the following parameters:
 
 =over
 

@@ -81,6 +81,9 @@ The target that should be fused. Can be either a directory to scan or a single f
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion::Script - Command-line fuse functionality.
@@ -115,7 +118,7 @@ L<Moose::Object>
 
 =head2 new
 
-Object constructor accepting the following parameters;
+Object constructor accepting the following parameters:
 
 =over
 

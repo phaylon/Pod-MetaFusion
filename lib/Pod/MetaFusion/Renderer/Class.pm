@@ -28,6 +28,9 @@ Returns the name of the field that holds the class to introspect. Defaults to C<
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion::Renderer::Class - Render class documentation
@@ -78,7 +81,7 @@ L<Moose::Object>
 
 =head2 new
 
-Object constructor accepting the following parameters;
+Object constructor accepting the following parameters:
 
 =over
 

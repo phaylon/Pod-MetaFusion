@@ -54,6 +54,9 @@ Renders the NAME section.
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion::Renderer::WithName - Render name and version information

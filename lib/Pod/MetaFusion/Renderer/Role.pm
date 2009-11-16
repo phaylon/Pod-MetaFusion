@@ -63,6 +63,9 @@ Renders the REQUIRED METHODS section.
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion::Renderer::Role - Render role documentation
@@ -111,7 +114,7 @@ L<Moose::Object>
 
 =head2 new
 
-Object constructor accepting the following parameters;
+Object constructor accepting the following parameters:
 
 =over
 

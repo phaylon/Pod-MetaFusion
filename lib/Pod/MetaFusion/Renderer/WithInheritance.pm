@@ -25,6 +25,9 @@ role Pod::MetaFusion::Renderer::WithInheritance with Pod::MetaFusion::Renderer::
             return unless @_;
             my ($class, @rest) = @_;
 
+            return $render->(@rest)
+                if $class =~ /__ANON__/;
+
             return join("\n",
                 '=over 2',
                   '',
@@ -77,6 +80,9 @@ See L<Pod::MetaFusion::Renderer::WithName>.
 Renders the INHERITANCE section.
 
 =end fusion
+
+
+
 
 
 

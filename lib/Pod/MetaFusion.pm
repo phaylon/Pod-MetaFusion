@@ -81,6 +81,9 @@ This library is free software; you can redistribute it and/or modify it under th
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion - 
@@ -122,7 +125,7 @@ L<Moose::Object>
 
 =head2 new
 
-Object constructor accepting the following parameters;
+Object constructor accepting the following parameters:
 
 =over
 

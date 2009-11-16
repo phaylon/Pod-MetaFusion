@@ -108,6 +108,9 @@ Set at build to the current point in time.
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion::Report - Collect information during fuse
@@ -134,7 +137,7 @@ L<Moose::Object>
 
 =head2 new
 
-Object constructor accepting the following parameters;
+Object constructor accepting the following parameters:
 
 =over
 

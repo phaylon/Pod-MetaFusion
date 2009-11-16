@@ -27,7 +27,12 @@ class TestModule extends TestBase with TestRole {
     method named (Int :$x) { $x }
     method rest ($n, @ns) { $n }
     method mixed (Int $n, Str :$y) { 23 }
+    method with_a_very (Int :$looong!, ArrayRef[HashRef[ArrayRef[Int]]] :$signature?) { 23 }
 }
+
+__END__
+
+=encoding utf-8
 
 =begin fusion
 
@@ -36,7 +41,7 @@ class TestModule extends TestBase with TestRole {
 @license OtherModule
 @CLASS TestModule
 
-Abstract text
+Abstract λ text
 
 @ATTR foo
 
@@ -59,6 +64,18 @@ Additionally you can pass in C<fnord> to reboot the internet.
 
 This is the description.
 
+=head2 Foo
+
+This is foo.
+
+=head1 BAR
+
+This is bar.
+
+=head2 Baz
+
+This is baz.
+
 @SYNOPSIS
 
     $foo->bar(23);
@@ -67,18 +84,19 @@ This is the description.
 
 
 
+
+
+
 =head1 NAME
 
 TestModule - 
-Abstract text
-
+Abstract λ text
 
 =head1 VERSION
 
 0.01
 
 =head1 SYNOPSIS
-
 
     $foo->bar(23);
 
@@ -102,7 +120,6 @@ L<TestBase>
 
 L<Moose::Object>
 
-
 =back
 
 =back
@@ -115,22 +132,29 @@ L<Moose::Object>
 
 =item * L<TestRole>
 
-
-
 =back
-
 
 =head1 DESCRIPTION
 
-
 This is the description.
 
+=head2 Foo
+
+This is foo.
+
+=head1 BAR
+
+This is bar.
+
+=head2 Baz
+
+This is baz.
 
 =head1 METHODS
 
 =head2 new
 
-Object constructor accepting the following parameters;
+Object constructor accepting the following parameters:
 
 =over
 
@@ -156,10 +180,7 @@ Initial value for the L<myclass|/"myclass (optional)"> attribute.
 
 =back
 
-
-
 Additionally you can pass in C<fnord> to reboot the internet.
-
 
 =head2 classmethod
 
@@ -171,15 +192,11 @@ Additionally you can pass in C<fnord> to reboot the internet.
 
 =over
 
-=item * $y
-
-
+=item * C<$y>
 
 =back
 
-
 =back
-
 
 =head2 dict
 
@@ -195,23 +212,19 @@ Reader for the L<dict|/"dict (required)"> attribute.
 
 =over
 
-=item * Int $x
+=item * Int C<$x>
 
 the integer we return
 
-=item * L<Dict|MooseX::Types::Structured/Dict>[foo,Int] $y
+=item * L<Dict|MooseX::Types::Structured/Dict>[foo,Int] C<$y>
 
 the integer we discard
 
 =back
 
-
 =back
 
-
-
 Additional method info.
-
 
 =head2 foo
 
@@ -227,26 +240,19 @@ Accessor for the L<foo|/"foo (optional)"> attribute.
 
 =over
 
-=item * Int $n
-
-
+=item * Int C<$n>
 
 =back
-
 
 =item * Named Parameters:
 
 =over
 
-=item * Str :$y
-
-
+=item * Str C<:$y> (optional)
 
 =back
 
-
 =back
-
 
 =head2 myclass
 
@@ -262,17 +268,13 @@ Accessor for the L<myclass|/"myclass (optional)"> attribute.
 
 =over
 
-=item * Int :$x
+=item * Int C<:$x> (optional)
 
 a named int
 
 =back
 
-
 =back
-
-
-
 
 =head2 no_type
 
@@ -284,15 +286,11 @@ a named int
 
 =over
 
-=item * $foo
-
-
+=item * C<$foo>
 
 =back
 
-
 =back
-
 
 =head2 rest
 
@@ -304,19 +302,40 @@ a named int
 
 =over
 
-=item * $n
+=item * C<$n>
 
-
-
-=item * @ns
-
-
+=item * C<@ns>
 
 =back
 
+=back
+
+=head2 with_a_very
+
+    ->with_a_very(
+        Int :$looong!,
+        ArrayRef[
+            HashRef[
+                ArrayRef[
+                    Int
+                ]
+            ]
+        ] :$signature
+    )
+
+=over
+
+=item * Named Parameters:
+
+=over
+
+=item * Int C<:$looong>
+
+=item * ArrayRef[HashRef[ArrayRef[Int]]] C<:$signature> (optional)
 
 =back
 
+=back
 
 =head2 meta
 
@@ -332,6 +351,14 @@ Returns the meta object for C<TestModule> as an instance of L<Class::MOP::Class:
 
 L<Dict|MooseX::Types::Structured/Dict>[foo,HashRef]
 
+=item * Constructor Argument
+
+dict
+
+=item * Associated Methods
+
+L<dict|/dict>
+
 =back
 
 =head2 foo (optional)
@@ -344,11 +371,17 @@ this is a foo
 
 Int
 
+=item * Constructor Argument
+
+foo
+
+=item * Associated Methods
+
+L<foo|/foo>
+
 =back
 
-
 Attribute description.
-
 
 =head2 myclass (optional)
 
@@ -358,8 +391,15 @@ Attribute description.
 
 L<TestModule>
 
-=back
+=item * Constructor Argument
 
+myclass
+
+=item * Associated Methods
+
+L<myclass|/myclass>
+
+=back
 
 =head1 ASSUMED VERSIONS
 
@@ -377,18 +417,12 @@ Version 0.92
 
 =over
 
-=item * MooseX::Declare
-
-
+=item * L<MooseX::Declare>
 
 =back
 
-
 =head1 LICENSE AND COPYRIGHT
 
-See L<OtherModule> for information about license and copyright
-
-
-
+See L<OtherModule> for information about license and copyright.
 
 =cut

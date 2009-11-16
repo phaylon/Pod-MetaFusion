@@ -141,6 +141,9 @@ Renders the ATTRIBUTES section.
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion::Renderer::WithAttributes - Render attribute documentation

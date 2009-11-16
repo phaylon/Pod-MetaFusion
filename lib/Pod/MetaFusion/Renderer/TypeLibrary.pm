@@ -21,7 +21,8 @@ class Pod::MetaFusion::Renderer::TypeLibrary
 
     method render_types_section (Spec $spec) {
 
-        my $meta = $self->meta_from_field($spec, $self->name_field);
+        my $meta = $self->meta_from_field($spec, $self->name_field)
+            or die "Unable to find meta for type library";
         my $lib  = $meta->name;
         my %data = map { ($_->[0], $_->[1]) } @{ $spec->get_field('type') || [] };
 
@@ -42,6 +43,14 @@ class Pod::MetaFusion::Renderer::TypeLibrary
                         map  { ($self->render_type_constraint($_), '') }
                         grep { blessed($_) and $_->isa('Moose::Meta::TypeConstraint') }
                             @{ $type->coercion->type_coercion_map || [] }
+                    ),
+                  ) : () ),
+                  ( $type->isa('Moose::Meta::TypeConstraint::Enum') ? (
+                    'Valid values:',
+                    '',
+                    $self->render_list(
+                        map { ( (sprintf 'C<%s>', $_), '' ) }
+                            @{ $type->values }
                     ),
                   ) : () ),
                   ( $data{ $_ } ? (
@@ -74,6 +83,9 @@ Returns the name of the field that holds the package of the type library. Defaul
 Renders the TYPES section.
 
 =end fusion
+
+
+
 
 
 
@@ -119,7 +131,7 @@ L<Moose::Object>
 
 =head2 new
 
-Object constructor accepting the following parameters;
+Object constructor accepting the following parameters:
 
 =over
 

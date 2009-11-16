@@ -2,8 +2,10 @@ use MooseX::Declare;
 
 role Pod::MetaFusion::Renderer::WithMethods with Pod::MetaFusion::Renderer::WithAttributes {
 
-    use List::AllUtils  qw( any );
-    use Moose::Util     qw( find_meta );
+    use Text::Balanced                  qw( extract_delimited extract_bracketed );
+    use List::AllUtils                  qw( any );
+    use Moose::Util                     qw( find_meta );
+    use Moose::Util::TypeConstraints    qw( find_type_constraint );
 
     requires qw( name_field );
 
@@ -82,7 +84,97 @@ role Pod::MetaFusion::Renderer::WithMethods with Pod::MetaFusion::Renderer::With
           : $a->name cmp $b->name
         } grep {
             $_->name !~ /\A_/
+        } grep {
+            (
+               not($_->isa('Moose::Meta::Method::Accessor')) 
+               or $meta->has_attribute($_->associated_attribute->name)
+            ) and (
+               not($_->isa('Moose::Meta::Method::Delegation')) 
+               or $meta->has_attribute($_->associated_attribute->name)
+            )
         } @$methods;
+    }
+
+    method _render_text_signature (Str $body, Int :$limit) {
+#        warn "TEXT SIGNATURE $body\n";
+#        $limit = 45 unless defined $limit;
+#        $limit = 10 if $limit
+
+        return "    $body"
+            if defined($limit) and length($body) < $limit;
+#        warn "BEYOND LIMIT\n";
+
+        my $done;
+
+        my %delim = ('[' => '["]', '(' => '(")');
+
+        while (length $body) {
+
+            if ($body =~ /\A"/) {
+                (my $found, $body) = extract_delimited $body, '"', '';
+
+                $done .= qq{"$found"} if defined $found;
+            }
+            elsif ($body =~ /\A(\[|\()/) {
+                (my $found, $body) = extract_bracketed $body, $delim{ $1 };
+#                warn "INNER $found";
+
+                if (defined $found) {
+
+                    if ($found =~ /\A ( [\[\(] ) (.*) ( [\)\]] ) \Z/x) {
+                        my $content = $2;
+                        my ($left, $right) = ($1, $3);
+#                        warn "BRACK $content $left $right\n";
+                        $done .= sprintf "%s\n%s\n%s", $left, $self->_render_text_signature($content), $right;
+                    }
+                    else {
+                        $done .= $found;
+                    }
+                }
+            }
+            elsif ($body =~ s/\A([a-z0-9_:]+)//i) {
+                my $type_name = $1;
+
+                my $tc = find_type_constraint $type_name;
+
+                if ($tc) {
+
+                    if (my $package = $self->get_package_from_type($tc)) {
+
+                        $done .= $package;
+                    }
+
+                    elsif ($type_name =~ /::/) {
+
+                        my @parts = split /::/, $type_name;
+                        my $type  = pop @parts;
+
+                        $done .= $type;
+                    }
+                    else {
+                        $done .= $type_name;
+                    }
+                }
+                else {
+                    $done .= $type_name;
+                }
+            }
+            else {
+                $body =~ s/\A(.)//sm;
+                my $char = $1;
+#                warn "CHAR: $char\n";
+                $done .= $char;
+                if ($char eq ',') {
+#                    warn "ADDING NEWLINE\n";
+                    $done .= "\n";
+                    $body =~ s/\A\s+//;
+                }
+#                warn "DONE NOW\n$done\nEND\n";
+            }
+        }
+
+#        warn "DONE\n$done\nEND\n";
+        return join '', map "    $_\n", grep { not /\A\s*\Z/ } split /\n/, $done;
     }
 
     method _render_method_data (HashRef $map, Object $method, Object $meta) {
@@ -110,8 +202,13 @@ role Pod::MetaFusion::Renderer::WithMethods with Pod::MetaFusion::Renderer::With
 
         elsif ($method->isa('Moose::Meta::Method::Constructor') or $method->name eq 'new') {
 
+            my @attrs =
+                grep { defined $_->init_arg }
+                sort { $a->name cmp $b->name }
+                    $meta->get_all_attributes;
+
             return(
-                'Object constructor accepting the following parameters;',
+                sprintf('Object constructor%s', scalar(@attrs) ? ' accepting the following parameters:' : '.'),
                 '',
                 $self->render_list(
                     map  { (
@@ -130,9 +227,10 @@ role Pod::MetaFusion::Renderer::WithMethods with Pod::MetaFusion::Renderer::With
                                 $self->render_attribute_name($_),
                             )),
                          }
-                    grep { defined $_->init_arg }
-                    sort { $a->name cmp $b->name }
-                        $meta->get_all_attributes
+                    grep {
+                            $_->name !~ /\A_/
+                         }
+                    @attrs
                 ),
             );
         }
@@ -177,24 +275,26 @@ role Pod::MetaFusion::Renderer::WithMethods with Pod::MetaFusion::Renderer::With
                 my $param = shift;
                 return join ' ',
                   ( $param->type_constraints ? $self->render_type_constraint($param->type_constraints->tc) : () ),
-                    sprintf('C<%s>', $param->_stringify_variable_name);
+                    sprintf('C<%s>', $param->_stringify_variable_name),
+                  ( $param->required ? () : '(optional)' ),
+                  ;
             };
 
             my @positional = $sig->has_positional_params ? (
-                map  { ($render_param->($_->[1]), $map->{param}{ $_->[0] } || '') }
+                map  { ($render_param->($_->[1]), $self->trim_string($map->{param}{ $_->[0] } || '')) }
                 map  { [$_->_stringify_variable_name, $_] }
                     $sig->positional_params
             ) : ();
 
             my @named = $sig->has_named_params ? (
-                map  { ($render_param->($_->[1]), $map->{param}{ $_->[0] } || '') }
+                map  { ($render_param->($_->[1]), $self->trim_string($map->{param}{ $_->[0] } || '')) }
                 sort { $a->[0] cmp $b->[0] }
                 map  { [$_->_stringify_variable_name, $_] }
                     $sig->named_params
             ) : ();
 
             return 
-                sprintf('    ->%s%s', $method->name, $sig->to_string),
+                $self->_render_text_signature(sprintf('->%s%s', $method->name, $sig->to_string), limit => 65),
                 '',
                 $self->render_list(
                   ( @positional ? (
@@ -236,6 +336,9 @@ See L<Pod::MetaFusion::Renderer::WithName>
 Renders the METHODS section.
 
 =end fusion
+
+
+
 
 
 

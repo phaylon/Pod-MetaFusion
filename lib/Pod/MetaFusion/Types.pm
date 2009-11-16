@@ -64,6 +64,9 @@ String path that exists as directory on the file system.
 
 
 
+
+
+
 =head1 NAME
 
 Pod::MetaFusion::Types - Types for L<Pod::MetaFusion>
